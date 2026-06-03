@@ -121,13 +121,13 @@ public class CalculateSales {
 		} finally {
 			// ファイルを開いている場合
 			if(br != null) {
-			try {
-				// ファイルを閉じる
-				br.close();
-			} catch(IOException e) {
-				System.out.println(UNKNOWN_ERROR);
-				return false;
-			}
+				try {
+					// ファイルを閉じる
+					br.close();
+				} catch(IOException e) {
+					System.out.println(UNKNOWN_ERROR);
+					return false;
+				}
 			}
 		}
 		return true;
