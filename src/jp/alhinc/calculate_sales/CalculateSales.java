@@ -54,20 +54,18 @@ public class CalculateSales {
 				File file = rcdFiles.get(i);
 				FileReader fr = new FileReader(file);
 				br = new BufferedReader(fr);
-                List<String> lines = new ArrayList<>();
+                List<String> fileData = new ArrayList<>();
                 String line;
                 while((line = br.readLine()) != null) {
-                	lines.add(line);
+                	fileData.add(line);
                 }
-	                String branchCode = lines.get(0);
-	                String sale = lines.get(1);
-	                //long fileSale = Long.parseLong(売上金額);
-	          		//Long saleAmount = HashMap.get(支店コード) + long に変換した売上金額;
-	                long fileSale = Long.parseLong(sale);//変換 //ファイルから読み込んだ売り上げ
-	                long saleAmount = branchSales.get(branchCode) +  Long.parseLong(sale);//Mapの売上金額を取得 //合算
-	                branchSales.put(branchCode,saleAmount);
-                }
-            catch(IOException e) {
+                String branchCode = fileData.get(0);
+                long fileSale = Long.parseLong(fileData.get(1));
+                //long fileSale = Long.parseLong(売上金額);
+          		//Long saleAmount = HashMap.get(支店コード) + long に変換した売上金額;
+                long saleAmount = branchSales.get(branchCode) +  fileSale;//Mapの売上金額を取得 //合算
+                branchSales.put(branchCode,saleAmount);
+            } catch(IOException e) {
             	System.out.println(UNKNOWN_ERROR);
     			return ;
             } finally {
@@ -82,7 +80,7 @@ public class CalculateSales {
     				}
     			}
     		 }
-    		}
+    	}
 
 		// 支店別集計ファイル書き込み処理
 		if(!writeFile(args[0], FILE_NAME_BRANCH_OUT, branchNames, branchSales)) {
@@ -118,18 +116,18 @@ public class CalculateSales {
 				System.out.println(line);
 			}
 		} catch(IOException e) {
+			System.out.println(UNKNOWN_ERROR);
+			return false;
+		} finally {
+			// ファイルを開いている場合
+			if(br != null) {
+			try {
+				// ファイルを閉じる
+				br.close();
+			} catch(IOException e) {
 				System.out.println(UNKNOWN_ERROR);
 				return false;
-		} finally {
-				// ファイルを開いている場合
-				if(br != null) {
-				try {
-					// ファイルを閉じる
-					br.close();
-				} catch(IOException e) {
-					System.out.println(UNKNOWN_ERROR);
-					return false;
-				}
+			}
 			}
 		}
 		return true;
@@ -158,12 +156,10 @@ public class CalculateSales {
 				bw.newLine();
 			}
 			bw.close();
-		}catch(IOException e) {
-				System.out.println(UNKNOWN_ERROR);
-				return false;
-			}
-
-		return true;
-
+		} catch(IOException e) {
+			System.out.println(UNKNOWN_ERROR);
+			return false;
 		}
+		return true;
 	}
+}
