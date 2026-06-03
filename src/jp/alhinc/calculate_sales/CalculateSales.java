@@ -23,6 +23,7 @@ public class CalculateSales {
 	private static final String UNKNOWN_ERROR = "予期せぬエラーが発生しました";
 	private static final String FILE_NOT_EXIST = "支店定義ファイルが存在しません";
 	private static final String FILE_INVALID_FORMAT = "支店定義ファイルのフォーマットが不正です";
+	private static final String FILE_NOT_CONTINUOUS = "売上ファイル名が連番になっていません";
 
 	/**
 	 * メインメソッド
@@ -102,6 +103,12 @@ public class CalculateSales {
 
 		try {
 			File file = new File(path, fileName);
+			//ファイルの存在確認
+			if(!file.exists()) {
+			    //支店定義ファイルが存在しない場合、コンソールにエラーメッセージを表示します。
+			    System.out.println(FILE_NOT_EXIST);
+			    return false;
+			}
 			FileReader fr = new FileReader(file);
 			br = new BufferedReader(fr);
 			String line;
@@ -114,6 +121,13 @@ public class CalculateSales {
 				branchNames.put(items[0], items[1]);
 				branchSales.put(items[0], 0L);
 				System.out.println(line);
+				if((items.length != 2) || (!items[0].matches("^\\d{3}$"))){
+				    //支店定義ファイルの仕様が満たされていない場合、
+				    //エラーメッセージをコンソールに表示します。
+				    System.out.println(FILE_INVALID_FORMAT);
+				    return false;
+				}
+
 			}
 		} catch(IOException e) {
 			System.out.println(UNKNOWN_ERROR);
