@@ -42,15 +42,12 @@ public class CalculateSales {
 
 		// ※ここから集計処理を作成してください。(処理内容2-1、2-2)
 		File[] files = new File(args[0]).listFiles();
-
 		List<File> rcdFiles = new ArrayList<>();
-
 		for(int i = 0; i < files.length ; i++) {
 			if(files[i].getName().matches("^[0-9]{8}\\.rcd$")) {
 				rcdFiles.add(files[i]);
 			}
 		}
-
 		for(int i = 0; i < rcdFiles.size(); i++) {
 			BufferedReader br = null;
 			try {
@@ -87,7 +84,6 @@ public class CalculateSales {
     		 }
     		}
 
-
 		// 支店別集計ファイル書き込み処理
 		if(!writeFile(args[0], FILE_NAME_BRANCH_OUT, branchNames, branchSales)) {
 			return;
@@ -121,7 +117,6 @@ public class CalculateSales {
 				branchSales.put(items[0], 0L);
 				System.out.println(line);
 			}
-
 		} catch(IOException e) {
 				System.out.println(UNKNOWN_ERROR);
 				return false;
