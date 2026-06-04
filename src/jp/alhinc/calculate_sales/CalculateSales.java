@@ -122,7 +122,7 @@ public class CalculateSales {
                     //売上金額が11桁以上の場合、エラーメッセージをコンソールに表示します。
     	                System.out.println(AMOUNT_LARGE);
     	   		        return ;
-                    }
+                }
 
             } catch(IOException e) {
             	System.out.println(UNKNOWN_ERROR);
@@ -156,7 +156,7 @@ public class CalculateSales {
 	 * @param 支店コードと売上金額を保持するMap
 	 * @return 読み込み可否
 	 */
-	private static boolean readFile(String path, String fileName, Map<String, String> branchNames, Map<String, Long> branchSales) {
+	 private static boolean readFile(String path, String fileName, Map<String, String> branchNames, Map<String, Long> branchSales) {
 		BufferedReader br = null;
 
 		try {
@@ -185,7 +185,6 @@ public class CalculateSales {
 				    System.out.println(FILE_INVALID_FORMAT);
 				    return false;
 				}
-
 			}
 		} catch(IOException e) {
 			System.out.println(UNKNOWN_ERROR);
@@ -215,7 +214,7 @@ public class CalculateSales {
 	 * @param 支店コードと売上金額を保持するMap
 	 * @return 書き込み可否
 	 */
-	private static boolean writeFile(String path, String fileName, Map<String, String> branchNames, Map<String, Long> branchSales) {
+	 private static boolean writeFile(String path, String fileName, Map<String, String> branchNames, Map<String, Long> branchSales) {
 		// ※ここに書き込み処理を作成してください。(処理内容3-1)
 		try {
 			File file = new File(path,fileName);
