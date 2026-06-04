@@ -127,22 +127,22 @@ public class CalculateSales {
 
 			} catch(IOException e) {
 				System.out.println(UNKNOWN_ERROR);
-    			return ;
+				return ;
 			} finally {
-    			// ファイルを開いている場合
-    			if(br != null) {
-    				try {
-    					// ファイルを閉じる
-    					br.close();
-    				} catch(IOException e) {
-    					System.out.println(UNKNOWN_ERROR);
-    					return;
-    				}
-    			}
-    		}
-    	}
+				// ファイルを開いている場合
+				if(br != null) {
+					try {
+						// ファイルを閉じる
+						br.close();
+					} catch(IOException e) {
+						System.out.println(UNKNOWN_ERROR);
+						return;
+					}
+				}
+			}
+		}
 
-		// 支店別集計ファイル書き込み処理
+		//支店別集計ファイル書き込み処理
 		if(!writeFile(args[0], FILE_NAME_BRANCH_OUT, branchNames, branchSales)) {
 			return;
 		}
@@ -175,7 +175,7 @@ public class CalculateSales {
 			while((line = br.readLine()) != null) {
 				// ※ここの読み込み処理を変更してください。(処理内容1-2)
 				//split を使って「,」(カンマ)で分割すると、
-			    //items[0] には支店コード、items[1] には支店名が格納されます。
+				//items[0] には支店コード、items[1] には支店名が格納されます。
 				String[] items = line.split(",");
 				branchNames.put(items[0], items[1]);
 				branchSales.put(items[0], 0L);
