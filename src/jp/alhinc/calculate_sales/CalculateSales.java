@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,7 +58,8 @@ public class CalculateSales {
 				rcdFiles.add(files[i]);
 			}
 		}
-
+		//連番チェックの前に売上ファイルを保持しているListをソートする
+        rcdFiles.sort(Comparator.naturalOrder());
 		//比較回数は売上ファイルの数よりも1回少ないため、
 		//繰り返し回数は売上ファイルのリストの数よりも1つ小さい数です。
 		for(int i = 0; i < rcdFiles.size() -1; i++) {
@@ -112,17 +114,16 @@ public class CalculateSales {
 			        return ;
 				}
 
-                //long fileSale = Long.parseLong(売上金額);
-          		//Long saleAmount = HashMap.get(支店コード) + long に変換した売上金額;
 				long fileSale = Long.parseLong(Sale);
-                long saleAmount = branchSales.get(branchCode) +  fileSale;//Mapの売上金額を取得 //合算
-                branchSales.put(branchCode,saleAmount);
+                long saleAmount = branchSales.get(branchCode) + fileSale;//Mapの売上金額を取得 //合算
 
                 if(fileSale >= 10000000000L || saleAmount >= 10000000000L){
                     //売上金額が11桁以上の場合、エラーメッセージをコンソールに表示します。
-    	                System.out.println(AMOUNT_LARGE);
-    	   		        return ;
+	                System.out.println(AMOUNT_LARGE);
+	   		        return;
                 }
+
+                branchSales.put(branchCode,saleAmount);
 
             } catch(IOException e) {
             	System.out.println(UNKNOWN_ERROR);
@@ -138,7 +139,7 @@ public class CalculateSales {
     					return;
     				}
     			}
-    		 }
+    		}
     	}
 
 		// 支店別集計ファイル書き込み処理
@@ -173,7 +174,7 @@ public class CalculateSales {
 			// 一行ずつ読み込む
 			while((line = br.readLine()) != null) {
 				// ※ここの読み込み処理を変更してください。(処理内容1-2)
-				 //split を使って「,」(カンマ)で分割すると、
+				//split を使って「,」(カンマ)で分割すると、
 			    //items[0] には支店コード、items[1] には支店名が格納されます。
 				String[] items = line.split(",");
 				branchNames.put(items[0], items[1]);
