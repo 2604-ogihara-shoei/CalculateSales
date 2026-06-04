@@ -92,16 +92,16 @@ public class CalculateSales {
 					fileData.add(line);
 				}
 				//売上ファイルの行数が2行ではなかった場合は、
-			    //エラーメッセージをコンソールに表示します。
+				//エラーメッセージをコンソールに表示します。
 				if(fileData.size() != 2) {
 					System.out.println(rcdFiles.get(i) +  "のフォーマットが不正です");
-			        return;
+					return;
 				}
 				String branchCode = fileData.get(0);//支店コード
 				String Sale = fileData.get(1);//売り上げ金額
 
-                //支店情報を保持しているMapに売上ファイルの支店コードが存在しなかった場合は、
-			    //エラーメッセージをコンソールに表示します。
+				//支店情報を保持しているMapに売上ファイルの支店コードが存在しなかった場合は、
+				//エラーメッセージをコンソールに表示します。
 				if (!branchNames.containsKey(branchCode)) {
 					System.out.println(rcdFiles.get(i) + "の支店コードが不正です");
 					return ;
