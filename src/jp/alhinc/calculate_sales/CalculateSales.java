@@ -33,10 +33,10 @@ public class CalculateSales {
 	 */
 	public static void main(String[] args) {
 		//コマンドライン引数が1つ設定されていなかった場合は、
-	    //エラーメッセージをコンソールに表示します。
+		//エラーメッセージをコンソールに表示します。
 		if (args.length != 1) {
 			System.out.println(UNKNOWN_ERROR);
-	        return ;
+			return;
 		}
 
 		// 支店コードと支店名を保持するMap
@@ -59,7 +59,7 @@ public class CalculateSales {
 			}
 		}
 		//連番チェックの前に売上ファイルを保持しているListをソートする
-        rcdFiles.sort(Comparator.naturalOrder());
+		rcdFiles.sort(Comparator.naturalOrder());
 		//比較回数は売上ファイルの数よりも1回少ないため、
 		//繰り返し回数は売上ファイルのリストの数よりも1つ小さい数です。
 		for(int i = 0; i < rcdFiles.size() -1; i++) {
@@ -69,12 +69,12 @@ public class CalculateSales {
 			int former = Integer.parseInt(formerFileName.substring(0, 8));
 			int latter = Integer.parseInt(latterFileName.substring(0, 8));
 
-		    //比較する2つのファイル名の先頭から数字の8文字を切り出し、int型に変換します。
+			//比較する2つのファイル名の先頭から数字の8文字を切り出し、int型に変換します。
 			if((latter - former) != 1) {
 				//2つのファイル名の数字を比較して、差が1ではなかったら、
 				//エラーメッセージをコンソールに表示します。
-		         System.out.println(FILE_NOT_CONTINUOUS);
-		         return ;
+				System.out.println(FILE_NOT_CONTINUOUS);
+				return;
 			}
 		}
 
@@ -86,49 +86,49 @@ public class CalculateSales {
 				br = new BufferedReader(fr);//売り上げファイル読み込み
 
 				//抽出して格納
-                List<String> fileData = new ArrayList<>();
-                String line;
-                while((line = br.readLine()) != null) {
-                	fileData.add(line);
-                }
-                //売上ファイルの行数が2行ではなかった場合は、
+				List<String> fileData = new ArrayList<>();
+				String line;
+				while((line = br.readLine()) != null) {
+					fileData.add(line);
+				}
+				//売上ファイルの行数が2行ではなかった場合は、
 			    //エラーメッセージをコンソールに表示します。
 				if(fileData.size() != 2) {
 					System.out.println(rcdFiles.get(i) +  "のフォーマットが不正です");
-			        return ;
+			        return;
 				}
-                String branchCode = fileData.get(0);//支店コード
-                String Sale = fileData.get(1);//売り上げ金額
+				String branchCode = fileData.get(0);//支店コード
+				String Sale = fileData.get(1);//売り上げ金額
 
                 //支店情報を保持しているMapに売上ファイルの支店コードが存在しなかった場合は、
 			    //エラーメッセージをコンソールに表示します。
 				if (!branchNames.containsKey(branchCode)) {
-					System.out.println(rcdFiles.get(i) +  "の支店コードが不正です");
-			        return ;
+					System.out.println(rcdFiles.get(i) + "の支店コードが不正です");
+					return ;
 				}
 
 				//売上金額が数字ではなかった場合は、
-			    //エラーメッセージをコンソールに表示します。
+				//エラーメッセージをコンソールに表示します。
 				if (!Sale.matches("^[0-9]+$")) {
 					System.out.println(UNKNOWN_ERROR);
-			        return ;
+					return;
 				}
 
 				long fileSale = Long.parseLong(Sale);
-                long saleAmount = branchSales.get(branchCode) + fileSale;//Mapの売上金額を取得 //合算
+				long saleAmount = branchSales.get(branchCode) + fileSale;//Mapの売上金額を取得 //合算
 
-                if(fileSale >= 10000000000L || saleAmount >= 10000000000L){
-                    //売上金額が11桁以上の場合、エラーメッセージをコンソールに表示します。
-	                System.out.println(AMOUNT_LARGE);
-	   		        return;
-                }
+				if(fileSale >= 10000000000L || saleAmount >= 10000000000L){
+					//売上金額が11桁以上の場合、エラーメッセージをコンソールに表示します。
+					System.out.println(AMOUNT_LARGE);
+					return;
+				}
 
-                branchSales.put(branchCode,saleAmount);
+				branchSales.put(branchCode,saleAmount);
 
-            } catch(IOException e) {
-            	System.out.println(UNKNOWN_ERROR);
+			} catch(IOException e) {
+				System.out.println(UNKNOWN_ERROR);
     			return ;
-            } finally {
+			} finally {
     			// ファイルを開いている場合
     			if(br != null) {
     				try {
@@ -164,9 +164,9 @@ public class CalculateSales {
 			File file = new File(path, fileName);
 			//ファイルの存在確認
 			if(!file.exists()) {
-			    //支店定義ファイルが存在しない場合、コンソールにエラーメッセージを表示します。
-			    System.out.println(FILE_NOT_EXIST);
-			    return false;
+				//支店定義ファイルが存在しない場合、コンソールにエラーメッセージを表示します。
+				System.out.println(FILE_NOT_EXIST);
+				return false;
 			}
 			FileReader fr = new FileReader(file);
 			br = new BufferedReader(fr);
@@ -181,10 +181,10 @@ public class CalculateSales {
 				branchSales.put(items[0], 0L);
 				System.out.println(line);
 				if((items.length != 2) || (!items[0].matches("^\\d{3}$"))){
-				    //支店定義ファイルの仕様が満たされていない場合、
-				    //エラーメッセージをコンソールに表示します。
-				    System.out.println(FILE_INVALID_FORMAT);
-				    return false;
+					//支店定義ファイルの仕様が満たされていない場合、
+					//エラーメッセージをコンソールに表示します。
+					System.out.println(FILE_INVALID_FORMAT);
+					return false;
 				}
 			}
 		} catch(IOException e) {
