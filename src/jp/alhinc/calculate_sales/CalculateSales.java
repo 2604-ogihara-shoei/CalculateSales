@@ -111,7 +111,7 @@ public class CalculateSales {
 				//売上ファイルの行数が3行ではなかった場合は、
 				//エラーメッセージをコンソールに表示します。
 				if(fileData.size() != 3) {
-					System.out.println(rcdFiles.get(i) +  "のフォーマットが不正です");
+					System.out.println(rcdFiles.get(i) + "のフォーマットが不正です");
 					return;
 				}
 				String branchCode = fileData.get(0);//支店コード
